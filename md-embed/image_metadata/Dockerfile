@@ -9,4 +9,4 @@ RUN apk add --no-cache \
 
 WORKDIR /workspace
 
-ENTRYPOINT ["/workspace/md-embed/tag-artwork.sh"]
+ENTRYPOINT ["/workspace/md-embed/image_metadata/embed-image-metadata.sh"]

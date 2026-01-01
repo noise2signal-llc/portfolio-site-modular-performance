@@ -76,53 +76,30 @@ hls/{category}/{track-name}/
 
 ## Metadata Embedding (md-embed/)
 
-Two containerized workflows for embedding metadata:
-
-### Image Metadata Tagger
-
-Tags artwork images with EXIF/IPTC/XMP metadata using exiftool.
+Containerized metadata embedding tools for site media. See `md-embed/CLAUDE.md` for detailed documentation.
 
 ```
 md-embed/
-├── Dockerfile.tagger       # Alpine + exiftool + jq
-├── tag-artwork.sh          # Tagging script (reads hardcoded manifest)
-└── launch-tagger.sh        # Container launcher (--force-rebuild to recreate)
+├── CLAUDE.md                       # Tool overview and usage
+├── image_metadata/                 # Image EXIF/IPTC/XMP embedding
+│   ├── Dockerfile                  # Alpine + exiftool + jq
+│   ├── launch-image-metadata-container.sh
+│   └── embed-image-metadata.sh
+└── hls_metadata/                   # HLS timed ID3 metadata
+    ├── Dockerfile                  # Bento4 build (gcc:13 base)
+    ├── launch-hls-metadata-container.sh
+    └── CONTEXT.md                  # Full workflow documentation
 ```
 
-**Manifest:** `site-root/img/images.json`
-```json
-{
-  "artist": "Artist Name",
-  "current_name": "Legal Name (optional)",
-  "images": [
-    {
-      "file": "image.jpg",
-      "title": "Title",
-      "date": "YYYY-MM-DD",
-      "medium": "Medium (optional)",
-      "description": "Description (optional)"
-    }
-  ]
-}
-```
-
-**Usage:**
+**Image Metadata:** Tags artwork with EXIF/IPTC/XMP using manifest at `site-root/img/images.json`.
 ```bash
-./md-embed/launch-tagger.sh
+./md-embed/image_metadata/launch-image-metadata-container.sh
 ```
 
-### HLS Timed Metadata (Bento4)
-
-Injects timed ID3 metadata into HLS segments for DJ mix track attribution.
-
+**HLS Metadata:** Injects timed ID3 metadata into HLS segments for DJ mix track attribution.
+```bash
+./md-embed/hls_metadata/launch-hls-metadata-container.sh
 ```
-md-embed/
-├── Dockerfile                      # Bento4 build (gcc:13 base)
-├── launch-metadata-injector.sh     # Interactive shell launcher
-└── bento4-hls-metadata-context.md  # Full documentation
-```
-
-**Usage:** See `md-embed/bento4-hls-metadata-context.md` for complete workflow.
 
 ## External Dependencies
 
@@ -148,3 +125,9 @@ md-embed/
 ## No Build/Test/Lint
 
 This is a static site with no build step, test framework, or linter configured. Changes to HTML/CSS/JS are immediately visible when the server is running.
+
+## Code Style
+
+- Minimal comments; code should be self-documenting
+- Comment only for intent or readable explanation of abstract operations (regex, jq filters)
+- Shell scripts output tool stdout only; no echo instrumentation unless tool provides no output (e.g., sed)

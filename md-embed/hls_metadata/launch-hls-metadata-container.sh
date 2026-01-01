@@ -1,18 +1,14 @@
 #!/bin/bash
-# Inject timed ID3 metadata into HLS segments using Bento4
-
 set -e
 
 GIT_ROOT="$(git rev-parse --show-toplevel)"
-SCRIPT_DIR="$GIT_ROOT/md-embed"
+SCRIPT_DIR="$GIT_ROOT/md-embed/hls_metadata"
 
-# Configuration
 CONTAINER_IMAGE="localhost/bento4-hls:latest"
 METADATA_DIR="${METADATA_DIR:-$SCRIPT_DIR/metadata}"
 SEGMENTS_DIR="${SEGMENTS_DIR:-$SCRIPT_DIR/segments}"
 OUTPUT_DIR="${OUTPUT_DIR:-$SCRIPT_DIR/output}"
 
-# Validate directories exist
 if [[ ! -d "$METADATA_DIR" ]]; then
     echo "Error: Metadata directory not found: $METADATA_DIR"
     echo "Set METADATA_DIR environment variable or create the directory"
@@ -25,24 +21,14 @@ if [[ ! -d "$SEGMENTS_DIR" ]]; then
     exit 1
 fi
 
-# Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
 
-echo "Bento4 HLS Metadata Injection"
-echo "=============================="
-echo "Metadata: $METADATA_DIR"
-echo "Segments: $SEGMENTS_DIR"
-echo "Output:   $OUTPUT_DIR"
-echo ""
-
-# Check if container image exists
 if ! podman image exists "$CONTAINER_IMAGE"; then
     echo "Error: Container image not found: $CONTAINER_IMAGE"
-    echo "Build with: podman build -t $CONTAINER_IMAGE -f $SCRIPT_DIR/Dockerfile $SCRIPT_DIR"
+    echo "Build with: podman build -t $CONTAINER_IMAGE -f \$GIT_ROOT/md-embed/hls_metadata/Dockerfile \$GIT_ROOT/md-embed/hls_metadata"
     exit 1
 fi
 
-# Run Bento4 container with volume mounts
 podman run --rm -it \
     -v "$METADATA_DIR:/work/metadata:ro" \
     -v "$SEGMENTS_DIR:/work/segments:ro" \
@@ -67,6 +53,3 @@ podman run --rm -it \
         echo "Entering interactive shell..."
         exec bash
     '
-
-echo ""
-echo "Container session ended."

@@ -1,7 +1,4 @@
 #!/bin/bash
-# Tag artwork images with comprehensive metadata using a manifest file
-# Populates EXIF, IPTC, and XMP fields for maximum compatibility
-
 set -e
 
 if ! command -v exiftool &> /dev/null; then
