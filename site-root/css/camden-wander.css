@@ -55,7 +55,7 @@ body {
 
 .inner-polygon-asc {
 	--x-offset: calc(var(--height) / tan(75deg));
-	clip-path: polygon(var(--x-offset) 8px,0px 100%,100% 100%,100% 8px);
+	clip-path: polygon(var(--x-offset) 0px,0px 100%,100% 100%,100% 0px);
 }
 
 .outer-polygon-desc {
@@ -65,45 +65,44 @@ body {
 
 .inner-polygon-desc {
 	--x-offset: calc(var(--height) / tan(60deg));
-	clip-path: polygon(0px 0px,0px calc(100% - 8px),100% calc(100% - 8px),calc(100% - var(--x-offset)) 0px);
+	clip-path: polygon(0px 0px,0px 100%,100% 100%,calc(100% - var(--x-offset)) 0px);
 }
 
 /* page title selectors */
 
 .title-outer {
-	--height: 60px;
-	width: 400px;
+	--height: 72px;
+	width: 404px;
 	height: var(--height);
+	margin: 0px 0px 0px 18px;
 }
 
 .title-inner {
-	--height: 60px;
 	height: 100%;
-	margin-left: 20px;
+	margin: 8px 0px 0px 24px;
 }
 
 p.title {
-	font-size: 36px;
-	margin-top: 8px;
-	text-align: center;
+	font-size: 32px;
+	margin: 8px 0px 0px 24px;
 }
 
 /* headline selectors */
 
 .headline-outer {
 	--height: 60px;
-	width: 460px;
+	height: var(--height);
+	width: 424px;
 }
 
 .headline-inner {
-	--height: 60px;
-	height: var(--height);
-	margin-right: 8px;
+	height: 100%;
+	margin: -8px 8px 0px 0px;
 }
 
 
 .headline {
-	text-align: center;
+	margin: 24px 0px 0px 50px;
 }
 
 /* media listings */
@@ -124,7 +123,7 @@ p.title {
 
 .track-group {
 	flex: 0 1 auto;
-	width: 460px;
+	width: 424px;
 	display: flex;
 	flex-direction: column;
 }
@@ -138,15 +137,15 @@ p.title {
 /* section headings */
 
 .section-heading-outer {
-	--height: 40px;
+	--height: 52px;
 	height: var(--height);
-	width: 280px;
-	margin-left: 20px;
+	width: 290px;
+	margin: 0px 0px 0px 18px;
 }
 
 .section-heading-inner {
 	height: 100%;
-	margin-left: 12px;
+	margin: 8px 0px 0px 20px;
 }
 
 .section-heading {
@@ -166,7 +165,8 @@ p.title {
 
 .track-listing-container {
 	overflow-y: scroll;
-	margin-right: 8px;
+	margin: -8px 8px 0px 0px;
+	scrollbar-width: none;
 }
 
 .track-listing-container ul {
@@ -176,7 +176,7 @@ p.title {
 .track-item {
 	display: flex;
 	gap: 8px;
-	padding: 2px 0px;
+	padding: 4px 0px;
 }
 
 .track-item.track-active,
@@ -187,13 +187,19 @@ p.title {
 }
 
 .track-queuer {
-	margin-left: 8px;
+	font-size: 14px;
+	margin: 2px 0px 0px 8px;
+}
+
+.track-info-toggle {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 1px 0px 0px 0px;
 }
 
 .track-queuer,
 .track-info-toggle {
 	font-family: 'Rubik', sans-serif;
-	font-size: 24px;
 	color: #EEE;
 	cursor: pointer;
 	text-decoration: none;
@@ -207,9 +213,9 @@ p.title {
 
 .track-name {
 	font-family: 'Rubik', sans-serif;
-	font-size: 18px;
+	font-size: 14px;
 	font-weight: 500;
-	margin: 4px 0px 0px 0px;
+	margin: 3px 0px 0px 0px;
 }
 
 .track-info-panel {
@@ -222,7 +228,7 @@ p.title {
 .info-panel-content {
 	background-color: #BBB;
 	--height: 60px;
-	padding: 4px 8px 8px 39px;
+	padding: 4px 8px 8px 28px;
 }
 
 .info-panel-content p {
