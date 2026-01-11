@@ -1,88 +1,115 @@
 body {
-	background-color: #011724;
+	background-image: radial-gradient(closest-side, #BAA, #9AA), url("../img/background.jpg");
+	background-blend-mode: color;
+	background-repeat: no-repeat;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	box-sizing: border-box;
 	min-height: 100vh;
 	gap: 0px;
+	margin: 0px;
+	padding: 20px 10px 2px 10px;
 }
 
-/* headings: orange border with green inlay, Orbitron font */
+/* headings: red border with grey inlay, Orbitron font */
 
 .heading-border {
-	background-color: #FF6435;
+	background-color: #F00;
 	display: flex;
 	width: 100%;
 	z-index: 2;
 }
 
 .heading-block {
-	background-color: #6AF794;
-	color: #011724;
+	background-color: #BBB;
+	color: #022;
 	font-family: 'Orbitron', monospace;
 	width: 100%;
 }
 
-/* groupings: yellow border with violet inlay, Rubik font */
+/* groupings: teal border with dark inlay, Rubik font */
 
 .group-border {
-	background-color: #FFF3C2;
+	background-color: #3BB;
 	width: 100%;
 	display: flex;
 	margin-top: -8px;
 }
 
 .group-block {
-	background-color: #2A0F64;
+	background-color: #022;
 	font: 500 16px 'Rubik', sans-serif;
 	width: 100%;
 	height: 100%;
 	margin: auto;
+	color: #EEE;
+}
+
+/* geometry */
+
+.outer-polygon-asc {
+	--x-offset: calc(var(--height) / tan(60deg));
+	clip-path: polygon(var(--x-offset) 0px,0px 100%,calc(100% - var(--x-offset)) 100%,100% 0px);
+}
+
+.inner-polygon-asc {
+	--x-offset: calc(var(--height) / tan(75deg));
+	clip-path: polygon(var(--x-offset) 8px,0px 100%,100% 100%,100% 8px);
+}
+
+.outer-polygon-desc {
+	--x-offset: calc(var(--height) / tan(75deg));
+	clip-path: polygon(0px 0px,var(--x-offset) 100%,100% 100%,calc(100% - var(--x-offset)) 0px);
+}
+
+.inner-polygon-desc {
+	--x-offset: calc(var(--height) / tan(60deg));
+	clip-path: polygon(0px 0px,0px calc(100% - 8px),100% calc(100% - 8px),calc(100% - var(--x-offset)) 0px);
 }
 
 /* page title selectors */
 
-.title-outer-polygon {
-	clip-path: polygon(72px 0px,16px 80px, 404px 80px,466px 0px);
-	width: 480px;
-	height: 80px;
+.title-outer {
+	--height: 60px;
+	width: 400px;
+	height: var(--height);
 }
 
-.title-inner-polygon {
-	clip-path: polygon(72px 8px, 36px 80px, 404px 80px,466px 8px);
-	height: 80px;
+.title-inner {
+	--height: 60px;
+	height: 100%;
+	margin-left: 20px;
 }
 
 p.title {
 	font-size: 36px;
-	margin-top: 16px;
+	margin-top: 8px;
 	text-align: center;
 }
 
 /* headline selectors */
 
-.headline-outer-polygon {
-	clip-path: polygon(0px 0px,30px 100%,100% 100%,calc(100% - 30px) 0px);
-	width: 480px;
-	height: 60px;
+.headline-outer {
+	--height: 60px;
+	width: 460px;
 }
 
-.headline-inner-polygon {
-	clip-path: polygon(0px 0px,0px calc(100% - 4px),calc(100% - 8px) calc(100% - 4px),calc(100% - 48px) 0px);
+.headline-inner {
+	--height: 60px;
+	height: var(--height);
+	margin-right: 8px;
 }
 
 
 .headline {
 	text-align: center;
-	color: #FFF3C2;
 }
 
 /* media listings */
 
 #media-list {
 	flex: 1;
-	box-sizing: bound
 }
 
 .media-list {
@@ -97,10 +124,9 @@ p.title {
 
 .track-group {
 	flex: 0 1 auto;
-	width: 480px;
+	width: 460px;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 }
 
 @media (max-width: 1080px) {
@@ -111,57 +137,64 @@ p.title {
 
 /* section headings */
 
-.section-heading-outer-polygon {
-	clip-path: polygon(40px 0px,0px 100%,calc(100% - 40px) 100%,100% 0px);
-	width: 320px;
-	height: 40px;
+.section-heading-outer {
+	--height: 40px;
+	height: var(--height);
+	width: 280px;
+	margin-left: 20px;
 }
 
-.section-heading-inner-polygon {
-	clip-path: polygon(40px 6px,16px 100%,calc(100% - 40px) 100%,100% 6px);
+.section-heading-inner {
 	height: 100%;
+	margin-left: 12px;
 }
 
 .section-heading {
 	font: 24px 'Orbitron', sans-serif;
-	color: #011724;
+	color: #022;
 	margin: auto;
 	margin-top: 6px;
-	margin-left: 42px;
+	margin-left: 32px;
 }
 
 /* track listings */
 
-.track-listing-outer-polygon {
-	clip-path: polygon(0px 0px,60px 100%,100% 100%,calc(100% - 60px) 0px);
-	height: 240px;
+.track-listing-outer {
+	--height: 240px;
+	height: var(--height);
 }
 
-.track-listing-inner-polygon {
-	clip-path: polygon(0px 0px,0px calc(100% - 8px),calc(100% - 8px) calc(100% - 8px),calc(100% - 108px) 0px);
+.track-listing-container {
+	overflow-y: scroll;
+	margin-right: 8px;
+}
+
+.track-listing-container ul {
+	padding: 8px 84px 0px 64px;
 }
 
 .track-item {
 	display: flex;
-	align-items: center;
 	gap: 8px;
-	padding: 4px 12px;
-	margin-left: 32px;
+	padding: 2px 0px;
 }
 
-li:first-child {
-	padding-top: 16px;
+.track-item.track-active,
+.track-item.track-active .track-queuer,
+.track-item.track-active .track-info-toggle{
+	color: #3BB;
+	filter: drop-shadow(0 0 4px #F00);
 }
 
-.track-item.track-active {
-	filter: drop-shadow(0 0 4px #FFFF00);
+.track-queuer {
+	margin-left: 8px;
 }
 
 .track-queuer,
 .track-info-toggle {
-	font-family: 'Orbitron', sans-serif;
-	font-size: 18px;
-	color: #FFF3C2;
+	font-family: 'Rubik', sans-serif;
+	font-size: 24px;
+	color: #EEE;
 	cursor: pointer;
 	text-decoration: none;
 	transition: color 0.2s;
@@ -169,25 +202,17 @@ li:first-child {
 
 .track-queuer:hover,
 .track-info-toggle:hover {
-	color: #FFFF00;
-}
-
-.track-item.track-active .track-queuer,
-.track-item.track-active .track-info-toggle {
-	color: #FFFF00;
+	color: #3BB;
 }
 
 .track-name {
 	font-family: 'Rubik', sans-serif;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 500;
-	color: #FFF3C2;
+	margin: 4px 0px 0px 0px;
 }
 
 .track-info-panel {
-	margin-left: 84px;
-	margin-top: 8px;
-	margin-bottom: 8px;
 	overflow: hidden;
 	transition: max-height 0.3s ease-out;
 }
@@ -195,41 +220,40 @@ li:first-child {
 /* info panels */
 
 .info-panel-content {
-	background-color: #F5E6D3;
-	border: 2px solid #FF6435;
-	padding: 12px 4px;
-	border-radius: 4px;
+	background-color: #BBB;
+	--height: 60px;
+	padding: 4px 8px 8px 39px;
 }
 
 .info-panel-content p {
-	margin: 4px 0;
-	font-family: 'Rubik', sans-serif;
+	margin: 2px 0px 0px 0px;
+	font-family: 'Orbitron', monospace;
 	font-size: 14px;
 	font-weight: 500;
-	color: #00273D;
+	color: #022;
 }
 
 .info-panel-close {
-	display: block;
-	text-align: right;
-	margin-top: 4px;
-	margin-right: 4px;
-	margin-bottom: 8px;
+	display: flex;
+	flex-direction: row;
+	margin: 4px 0px;
 	font-family: 'Rubik', sans-serif;
 	font-size: 14px;
-	color: #00273D;
-	text-decoration: underline;
+	color: #EEE;
+	text-decoration: none;
 	cursor: pointer;
 }
 
 .info-panel-close:hover {
-	color: #FF6435;
+	color: #F00;
 }
 
 .close-x {
-	font-family: 'Orbitron', sans-serif;
+	font-family: 'Orbitron', monospace;
+	font-weight: bold;
+	font-size: 24px;
 	text-decoration: none;
-	margin-left: 4px;
+	margin: -4px 8px -4px 0px;
 }
 
 /* main player UI controls */
@@ -244,17 +268,13 @@ li:first-child {
 #play-control {
 	display: flex;
 	flex-direction: column;
-	width: 80px;
+	width: 60px;
 	height: 100%;
 	flex-shrink: 0;
 	flex-grow: 0;
-}
-
-.play-control-outer-polygon {
-	clip-path: polygon(0px 0px,20px 30px,80px 30px,60px 0px);
-	background-color: #EEE3C2;
-	width: 100%;
-	height: 100%;
+	background-color: #022;
+	--height: 30px;
+	height: var(--height);
 }
 
 .play-pause-btn {
@@ -262,10 +282,10 @@ li:first-child {
 }
 
 #player-text {
-	color: #2A0F64;
+	color: #3BB;
 	font: 22px 'Orbitron', sans-serif;
-	text-align: center;
-	margin: auto;
+	margin-left: 24px;
+	margin-top: -2px;
 }
 
 @keyframes flash {
@@ -289,10 +309,10 @@ li:first-child {
 /* dynamic, interactive timeline */
 
 #timeline {
-	height: 30px;
+	--height: 30px;
+	height: var(--height);
 	width: 100%;
-	background-color: #FFF3C2;
-	clip-path: polygon(0px 0px, 20px 30px, 100% 100%, calc(100% - 20px) 0%);
+	background-color: #3BB;
 	cursor: pointer;
 	white-space: nowrap;
 	display: flex;
@@ -306,17 +326,16 @@ li:first-child {
 }
 
 #timeline-played {
-	height: 100%;
-	min-width: 20px;
-	background-color: #2A0F64;
-	clip-path: polygon(0px 0px, 20px 30px, 100% 100%, calc(100% - 20px) 0%);
+	--height: 30px;
+	height: var(--height);
+	background-color: #022;
 	overflow: clip;
 }
 
 #played-status {
-	color: #FFF3C2;
+	color: #3BB;
 	text-align: right;
-	margin-right: 24px;
+	margin-right: 12px;
 	margin-left: -400px;
 }
 
@@ -325,14 +344,14 @@ li:first-child {
 }
 
 #queued-status {
-	color: #2A0F64;
+	color: #022;
 	text-align: left;
-	margin-left: 0px;
+	margin-left: 2px;
 	margin-right: -400px;
 }
 
 #footer {
 	font: 12px 'Rubik', sans-serif;
-	color: #2A0F64;
+	color: #022;
 	line-height: 0px;
 }
