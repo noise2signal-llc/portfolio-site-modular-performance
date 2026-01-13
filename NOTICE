@@ -1,0 +1,22 @@
+Camden Wander Portfolio Site
+Copyright (c) 2026 Noise2Signal LLC
+
+This software includes the following third-party dependencies:
+
+================================================================================
+
+hls.js
+https://github.com/video-dev/hls.js
+Licensed under the Apache License, Version 2.0
+Copyright (c) 2017 Dailymotion (http://www.dailymotion.com)
+
+Portions of hls.js (MP4 Generator and Exp-Golomb implementation) are derived from:
+videojs-contrib-hls
+https://github.com/videojs/videojs-contrib-hls
+Copyright (c) 2013-2015 Brightcove
+Licensed under the Apache License, Version 2.0
+
+================================================================================
+
+The Apache License 2.0 is available at:
+http://www.apache.org/licenses/LICENSE-2.0

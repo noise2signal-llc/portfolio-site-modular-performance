@@ -45,8 +45,12 @@ Requires s3cmd configuration at ~/.s3cfg on the host. The container mounts this 
 
 ## External Dependencies
 
-- HLS.js (CDN) - Adaptive bitrate streaming
+- HLS.js (CDN) - Adaptive bitrate streaming, Apache License 2.0
 - Google Fonts - Orbitron (titles), Rubik (body)
+
+## Contributing
+
+This repository is a creative and technical portfolio for Noise2Signal LLC. While the interest is appreciated, this project is not accepting external contributions. The Issues list provides visibility to the author's task tracking before publication.
 
 ## Container Requirements
 

@@ -125,3 +125,29 @@ s3cmd ws-create --ws-index=index.html --ws-error=nope.html s3://camden-wander/
 - Comment only for intent or readable explanation of abstract operations (regex, jq filters)
 - Shell scripts output tool stdout only; no echo instrumentation unless tool provides no output (e.g., sed)
 
+## 2026-01-13: Refactor - HLS Path Updates and Apache License Compliance
+
+**[COMPLETED - REFACTOR]:**
+- Updated performance track `data-src` paths in `index.html` to match new transcoder output structure:
+  - `hls/three-wave-music-december-2024/` → `hls/december-2024/`
+  - `hls/modstock-july-2025/` → `hls/july-2025/`
+- Removed `site-root/data/tracks.json` and empty `data/` directory
+  - JavaScript already uses DOM-based track data (`data-src`, `data-id`, `.track-name` text)
+  - No runtime dependency on tracks.json existed
+- Current state: Track metadata remains in HTML as static content
+
+**[COMPLETED - AMEND]:**
+- Added Apache License 2.0 attribution for hls.js to footer in `index.html` (low-profile span format)
+  - Acknowledges Dailymotion (2017) and Brightcove (2013-2015) copyright holders
+  - Links to hls.js GitHub repository
+- Created `/workspace/NOTICE` file documenting Apache-licensed dependencies
+- Updated README:
+  - Added "Contributing" section stating repository doesn't accept external contributions
+  - Noted HLS.js dependency uses Apache License 2.0
+
+**[DESIRED END STATE - DEFERRED]:**
+Metadata extraction from HLS manifest tags for dynamic track display is deferred pending transcoder updates:
+- Goal: Extract track title/metadata from HLS manifest tags (e.g., `#EXTINF` title field, custom `#EXT-X-*` tags) via HLS.js parsed manifest data
+- Responsibility: Ensuring HLS manifests contain accurate metadata is external to this repository and handled in the `batch-ffmpeg-hls-transcoder` project
+- Next step: Once transcoder injects metadata into HLS manifests, implement JavaScript to read parsed manifest data from HLS.js API (e.g., `hls.levels`, `MANIFEST_PARSED` event)
+- Vision: Decouple player/timeline into reusable library where HLS manifests are source of truth for track state
