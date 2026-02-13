@@ -3,16 +3,7 @@
 variable "domain_name" {
   description = "Primary domain name (apex, e.g., camdenwander.com)"
   type        = string
-}
-
-variable "hosted_zone_id" {
-  description = "Route53 hosted zone ID (from domains layer)"
-  type        = string
-}
-
-variable "certificate_arn" {
-  description = "ACM certificate ARN in us-east-1 (must cover apex and www)"
-  type        = string
+  default     = "camdenwander.com"
 }
 
 variable "cloudfront_price_class" {
