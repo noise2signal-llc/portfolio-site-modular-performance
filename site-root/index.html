@@ -116,11 +116,25 @@
 								<p>Duration: 30:22</p>
 							</div>
 						</li>
+						<li class="track-item" data-id="configuration-test" data-src="hls/configuration-test/master.m3u8">
+							<a class="track-queuer">&#9654;</a>
+							<a class="track-info-toggle">&#9432;</a>
+							<p class="track-name">March 2026</p>
+						</li>
+						<li class="track-info-panel" data-track-id="configuration-test" style="display: none;">
+							<div class="info-panel-content outer-polygon-desc">
+								<a class="info-panel-close"><span class="close-x">^</span> hide</a>
+								<p>Date: 2026-03-04</p>
+								<p>Venue: off Route 303 in "upstate" NY</p>
+								<p>Duration: 4:22</p>
+							</div>
+						</li>
 					</ul>
 					</div>
 				</div>
 			</div>
 		</div>
+		<video id="player"></video>
 		<div id="controls">
 			<div id="play-control" class="outer-polygon-desc">
 				<p id="player-text" class="play-pause-btn">&#9654;</p>
@@ -133,7 +147,6 @@
 					<p id="queued-status" class="timeline-status">(Select a track to play above)</p>
 				</div>
 			</div>
-			<audio id="player"></audio>
 		</div>
 		<div id="footer">
 			<p>&copy; 2026 Noise2Signal LLC <span>| This site uses <a href="https://github.com/video-dev/hls.js">hls.js</a>, licensed under the Apache License 2.0. Copyright &copy; 2017 Dailymotion. Portions &copy; 2013-2015 Brightcove.</span></p>
