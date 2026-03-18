@@ -179,8 +179,7 @@ p.title {
 }
 
 .track-item.track-active,
-.track-item.track-active .track-queuer,
-.track-item.track-active .track-info-toggle{
+.track-item.track-active .track-queuer {
 	color: #3BB;
 	filter: drop-shadow(0 0 4px #F00);
 }
@@ -190,14 +189,7 @@ p.title {
 	margin: 2px 0px 0px 8px;
 }
 
-.track-info-toggle {
-	font-size: 16px;
-	font-weight: bold;
-	margin: 1px 0px 0px 0px;
-}
-
-.track-queuer,
-.track-info-toggle {
+.track-queuer {
 	font-family: 'Rubik', sans-serif;
 	color: #EEE;
 	cursor: pointer;
@@ -205,8 +197,7 @@ p.title {
 	transition: color 0.2s;
 }
 
-.track-queuer:hover,
-.track-info-toggle:hover {
+.track-queuer:hover {
 	color: #3BB;
 }
 
@@ -217,48 +208,20 @@ p.title {
 	margin: 3px 0px 0px 0px;
 }
 
-.track-info-panel {
-	overflow: hidden;
-	transition: max-height 0.3s ease-out;
+#playerCell {
+	max-width: 240px;
+	max-height: 120px;
 }
-
-/* info panels */
 
 .info-panel-content {
 	background-color: #BBB;
 	--height: 60px;
-	padding: 4px 8px 8px 28px;
-}
-
-.info-panel-content p {
-	margin: 2px 0px 0px 0px;
+	margin: 4px 0px 0px 0px;
+	padding: 0px 0px 2px 36px;
 	font-family: 'Rubik', sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: 300;
 	color: #022;
-}
-
-.info-panel-close {
-	display: flex;
-	flex-direction: row;
-	margin: 4px 0px;
-	font-family: 'Rubik', sans-serif;
-	font-size: 14px;
-	color: #EEE;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.info-panel-close:hover {
-	color: #F00;
-}
-
-.close-x {
-	font-family: 'Orbitron', monospace;
-	font-weight: bold;
-	font-size: 24px;
-	text-decoration: none;
-	margin: -4px 8px -4px 0px;
 }
 
 /* main player UI controls */
@@ -356,6 +319,8 @@ p.title {
 }
 
 #footer {
+	display: flex;
+        flex-wrap: wrap;
 	font: 12px 'Rubik', sans-serif;
 	color: #022;
 	line-height: 0px;
