@@ -208,11 +208,6 @@ p.title {
 	margin: 3px 0px 0px 0px;
 }
 
-#playerCell {
-	max-width: 240px;
-	max-height: 120px;
-}
-
 .info-panel-content {
 	background-color: #BBB;
 	--height: 60px;
