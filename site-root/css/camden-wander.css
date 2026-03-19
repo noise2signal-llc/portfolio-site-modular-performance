@@ -131,6 +131,9 @@ p.title {
 	.media-list {
 		flex-direction: column;
 	}
+	#player {
+		max-width: 440px;
+	}
 }
 
 /* section headings */
@@ -314,9 +317,8 @@ p.title {
 }
 
 #footer {
-	display: flex;
-        flex-wrap: wrap;
 	font: 12px 'Rubik', sans-serif;
 	color: #022;
-	line-height: 0px;
+	margin: 2px 0px;
+	text-align: center;
 }
