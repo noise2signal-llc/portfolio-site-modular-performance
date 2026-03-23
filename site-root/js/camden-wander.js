@@ -1,16 +1,14 @@
 var hls = null;
-var player = document.getElementById('player');
-var playControl = document.getElementById('play-control');
-var playControlText = document.getElementById('player-text');
+const player = document.getElementById('player');
+var playerInterface = document.getElementById('playerInterface');
+var mainControl = document.getElementById('mainControl');
 var timeline = document.getElementById('timeline');
 var timelinePlayed = document.getElementById('timeline-played');
 var timelinePlayedStatus = document.getElementById('played-status');
 var timelineQueuedStatus = document.getElementById('queued-status');
 
-var PLAY_ICON = '\u25B6';
-var PAUSE_ICON = '\u23F8';
-
 var currentTrackData = null;
+var loadedTrack = null;
 
 function formatTime(seconds) {
   if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
@@ -19,108 +17,19 @@ function formatTime(seconds) {
   return mins + ':' + (secs < 10 ? '0' : '') + secs;
 }
 
-function loadTrack(src, trackId, trackTitle) {
-  if (hls) {
-    hls.destroy();
-  }
-  currentTrackData = { id: trackId, title: trackTitle, src: src };
-  hls = new Hls();
-  hls.attachMedia(player);
-  hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
-    if (data.sessionData) {
-      var titleData = data.sessionData['com.noise2signal-llc.title'];
-      if (titleData && titleData.VALUE) {
-        currentTrackData.title = titleData.VALUE;
-      }
-    }
-    playControl.disabled = false;
-    player.play();
-  });
-  hls.on(Hls.Events.ERROR, function(event, data) {
-    console.error('HLS error:', data.type, data.details, data.fatal ? '(fatal)' : '');
-  });
-  hls.loadSource(src);
+function userPauseEvent() {
+  mainControl.textContent = "\u25AE\u25AE";
+  loadedTrack.classList.replace("playing", "paused");
+  loadedTrack.querySelector('.track-control').textContent = "\u25AE\u25AE";
+  player.pause();
 }
 
-function initializeTrackListeners() {
-  var trackItems = document.querySelectorAll('.track-item');
-  trackItems.forEach(function(item) {
-    var queuer = item.querySelector('.track-queuer');
-    var trackId = item.getAttribute('data-id');
-    var src = item.getAttribute('data-src');
-    var title = item.querySelector('.track-name').textContent;
-
-    queuer.addEventListener('click', function(e) {
-      e.preventDefault();
-      var wasActive = item.classList.contains('track-active');
-
-      document.querySelectorAll('.track-active').forEach(function(el) {
-        el.classList.remove('track-active');
-        el.querySelector('.track-queuer').textContent = PLAY_ICON;
-      });
-
-      if (wasActive && !player.paused) {
-        player.pause();
-      } else {
-        item.classList.add('track-active');
-        queuer.textContent = PAUSE_ICON;
-        if (currentTrackData && currentTrackData.id === trackId && player.paused) {
-          player.play();
-        } else {
-          loadTrack(src, trackId, title);
-        }
-      }
-    });
-  });
-
+function userResumeEvent() {
+  mainControl.textContent = "\u25B6"
+  loadedTrack.classList.replace("paused", "playing");
+  loadedTrack.querySelector('.track-control').textContent = "\u25B6";
+  player.play()
 }
-
-/* player controls */
-
-playControl.addEventListener('click', function() {
-  if (this.disabled) return;
-  if (player.paused) {
-    player.play();
-  } else {
-    player.pause();
-  }
-});
-
-player.addEventListener('play', function() {
-  playControlText.textContent = PAUSE_ICON;
-  playControl.classList.add('playing');
-
-  if (currentTrackData) {
-    var activeItem = document.querySelector('.track-item[data-id="' + currentTrackData.id + '"]');
-    if (activeItem) {
-      activeItem.classList.add('track-active');
-      activeItem.querySelector('.track-queuer').textContent = PAUSE_ICON;
-    }
-  }
-});
-
-player.addEventListener('pause', function() {
-  playControlText.textContent = PLAY_ICON;
-  playControl.classList.remove('playing');
-
-  if (currentTrackData) {
-    var activeItem = document.querySelector('.track-item[data-id="' + currentTrackData.id + '"]');
-    if (activeItem) {
-      activeItem.querySelector('.track-queuer').textContent = PLAY_ICON;
-    }
-  }
-});
-
-
-/* responsive timeline controls */
-
-player.addEventListener('timeupdate', function() {
-  if (player.duration && !isNaN(player.duration)) {
-    var percent = (player.currentTime / player.duration) * 100;
-    timelinePlayed.style.width = percent + '%';
-    updateTimelineText();
-  }
-});
 
 function updateTimelineText() {
   if (!currentTrackData || !player.duration || isNaN(player.duration)) {
@@ -135,6 +44,91 @@ function updateTimelineText() {
   timelineQueuedStatus.textContent = '-' + formatTime(player.duration - player.currentTime) + ' <<< ' + currentTrackData.title;
 }
 
+function resetPlayer() {
+  if (hls) {
+    hls.destroy();
+    hls = null;
+  }
+  loadedTrack.classList.remove("playing", "paused");
+  loadedTrack.classList.add("idle");
+  loadedTrack.querySelector('.track-control').textContent = "\u25B6";
+  mainControl.textContent = "\u25A0";
+  currentTrackData = null;
+  loadedTrack = null;
+  updateTimelineText();
+}
+
+
+function loadTrack(src, trackId, trackTitle) {
+  currentTrackData = { id: trackId, title: trackTitle, src: src };
+  hls = new Hls();
+  hls.attachMedia(player);
+  hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+    if (data.sessionData) {
+      var titleData = data.sessionData['com.noise2signal-llc.title'];
+      if (titleData && titleData.VALUE) {
+        currentTrackData.title = titleData.VALUE;
+      }
+    }
+    player.play();
+  });
+  hls.on(Hls.Events.ERROR, function(event, data) {
+    console.error('HLS error:', data.type, data.details, data.fatal ? '(fatal)' : '');
+  });
+  hls.loadSource(src);
+}
+
+function initializeTrackListeners() {
+  var trackItems = document.querySelectorAll('.track-item');
+  trackItems.forEach(function(track) {
+    var trackControl = track.querySelector('.track-control');
+    var trackId = track.getAttribute('data-id');
+    var src = track.getAttribute('data-src');
+    var title = track.querySelector('.track-name').textContent;
+
+    trackControl.addEventListener('click', function(e) {
+      if (loadedTrack != null) {
+        if (currentTrackData.id === trackId) {
+          if (player.paused) {
+            userResumeEvent();
+          } else {
+            userPauseEvent();
+          }
+        } else {
+          resetPlayer();
+        }
+      }
+      if (loadedTrack === null) {
+        loadedTrack = document.querySelector('.track-item[data-id="' + trackId + '"]');
+        loadedTrack.classList.replace("idle", "playing");
+        mainControl.textContent = "\u25B6"
+        loadTrack(src, trackId, title);
+      }
+    });
+  });
+}
+
+/* player controls */
+
+mainControl.addEventListener('click', function() {
+  if (!loadedTrack) return;
+  if (player.paused) {
+    userResumeEvent();
+  } else {
+    userPauseEvent();
+  }
+});
+
+/* responsive timeline controls */
+
+player.addEventListener('timeupdate', function() {
+  if (player.duration && !isNaN(player.duration)) {
+    var percent = (player.currentTime / player.duration) * 100;
+    timelinePlayed.style.width = percent + '%';
+    updateTimelineText();
+  }
+});
+
 timeline.addEventListener('click', function(e) {
   if (!player.duration || isNaN(player.duration)) return;
   var timelineRect = timeline.getBoundingClientRect();
@@ -148,19 +142,7 @@ timeline.addEventListener('click', function(e) {
 });
 
 player.addEventListener('ended', function() {
-  if (hls) {
-    hls.destroy();
-    hls = null;
-  }
-  document.querySelectorAll('.track-active').forEach(function(el) {
-    el.classList.remove('track-active');
-    el.querySelector('.track-queuer').textContent = PLAY_ICON;
-  });
-  playControlText.textContent = PLAY_ICON;
-  playControl.classList.remove('playing');
-  playControl.disabled = true;
-  currentTrackData = null;
-  updateTimelineText();
+  resetPlayer();
 });
 
 initializeTrackListeners();

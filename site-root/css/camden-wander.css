@@ -39,7 +39,7 @@ body {
 
 .group-block {
 	background-color: #022;
-	font: 500 16px 'Rubik', sans-serif;
+	font-family: 'Rubik', sans-serif;
 	width: 100%;
 	height: 100%;
 	color: #EEE;
@@ -81,7 +81,7 @@ body {
 	margin: 8px 0px 0px 24px;
 }
 
-p.title {
+.title {
 	font-size: 32px;
 	margin: 8px 0px 0px 24px;
 }
@@ -95,13 +95,14 @@ p.title {
 }
 
 .headline-inner {
-	height: 100%;
 	margin: -8px 8px 0px 0px;
 }
 
 
 .headline {
 	margin: 24px 0px 0px 50px;
+	font-size: 16px;
+	font-weight: 500;
 }
 
 /* media listings */
@@ -136,7 +137,7 @@ p.title {
 	}
 }
 
-/* section headings */
+/* track listings */
 
 .section-heading-outer {
 	--height: 52px;
@@ -151,132 +152,78 @@ p.title {
 }
 
 .section-heading {
-	font: 24px 'Orbitron', sans-serif;
+	font: 24px 'Orbitron', monospace;
 	color: #022;
-	margin: auto;
-	margin-top: 6px;
-	margin-left: 32px;
+	margin: 6px 0px 0px 32px;
 }
 
-/* track listings */
 
 .track-listing-outer {
 	--height: 240px;
 	height: var(--height);
 }
 
-.track-listing-container {
-	overflow-y: scroll;
-	margin: -8px 8px 0px 0px;
-	scrollbar-width: none;
+.track-listing-inner {
+	margin: 0px 8px 0px 0px;
 }
 
-.track-listing-container ul {
-	padding: 8px 84px 0px 64px;
-}
-
-.track-item {
-	display: flex;
-	gap: 8px;
-	padding: 4px 0px;
-}
-
-.track-item.track-active,
-.track-item.track-active .track-queuer {
-	color: #3BB;
-	filter: drop-shadow(0 0 4px #F00);
-}
-
-.track-queuer {
-	font-size: 14px;
-	margin: 2px 0px 0px 8px;
-}
-
-.track-queuer {
-	font-family: 'Rubik', sans-serif;
+.track-listing {
+	padding: 16px 84px 0px 64px;
 	color: #EEE;
-	cursor: pointer;
-	text-decoration: none;
-	transition: color 0.2s;
 }
 
-.track-queuer:hover {
-	color: #3BB;
+td {
+	padding: 4px 0px;
+	vertical-align: top;
+}
+
+.track-control {
+	text-align: center;
+	width: 32px;
+	cursor: pointer;
+	font-size: 12px;
 }
 
 .track-name {
-	font-family: 'Rubik', sans-serif;
 	font-size: 14px;
 	font-weight: 500;
-	margin: 3px 0px 0px 0px;
 }
 
-.info-panel-content {
-	background-color: #BBB;
-	--height: 60px;
-	margin: 4px 0px 0px 0px;
-	padding: 0px 0px 2px 36px;
-	font-family: 'Rubik', sans-serif;
-	font-size: 12px;
-	font-weight: 300;
-	color: #022;
+.playing {
+	color: #F00;
+}
+
+.paused {
+	color: #FF0;
+}
+
+.idle {
+	color: #EEE;
 }
 
 /* main player UI controls */
 
-#controls {
+#playerInterface {
 	display: flex;
-	align-items: center;
 	width: 100%;
-	height: 30px;
-}
-
-#play-control {
-	display: flex;
-	flex-direction: column;
-	width: 60px;
-	height: 100%;
-	flex-shrink: 0;
-	flex-grow: 0;
-	background-color: #022;
 	--height: 30px;
 	height: var(--height);
 }
 
-.play-pause-btn {
-	cursor: pointer;
-}
-
-#player-text {
+#mainControl {
+	width: 60px;
+	background-color: #022;
 	color: #3BB;
-	font: 22px 'Orbitron', sans-serif;
-	margin-left: 24px;
-	margin-top: -2px;
-}
-
-@keyframes flash {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.play-pause-btn:hover:not(:disabled) {
-	animation: flash 0.5s linear infinite;
-}
-
-.play-control:disabled {
-	opacity: 0.5;
-	cursor: default;
+	text-align: center;
+	height: 100%;
+	padding: 4px 0px 0px 0px;
+	font-family: 'Rubik', sans-serif;
+	cursor: pointer;
 }
 
 /* dynamic, interactive timeline */
 
 #timeline {
-	--height: 30px;
-	height: var(--height);
 	width: 100%;
 	background-color: #3BB;
 	cursor: pointer;
@@ -292,10 +239,9 @@ p.title {
 }
 
 #timeline-played {
-	--height: 30px;
-	height: var(--height);
 	background-color: #022;
 	overflow: clip;
+	height: 100%;
 }
 
 #played-status {
